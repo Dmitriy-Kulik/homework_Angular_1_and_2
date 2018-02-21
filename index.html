@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    <script src="node_modules/angular/angular.js" defer></script>
+
+    <script src="src/main.js" defer></script>
+</head>
+<body>
+<div class="wrapper" ng-class="{'app-loaded': true}">
+    <div ng-controller="PageController as page">
+        <div class="btn_bock">
+        <div class="btn_lay">
+            Вид:
+            <button class="btn btn-default btn-sm" ng-class="{active: layout == 'grid'}" ng-click="itemClicked('grid')">Плитка</button>
+            <button class="btn btn-default btn-sm" ng-class="{active: layout == 'list'}" ng-click="itemClicked('list')">Список</button>
+        </div>
+
+        <div class="btn_sort">
+            Сортировка:
+            <button class="btn btn-primary btn-sm" ng-click="mysort('price')">Цена &uarr;</button>
+            <button class="btn btn-primary btn-sm" ng-click="mysort('-price')">Цена &darr;</button>
+            <button class="btn btn-primary btn-sm" ng-click="mysort('name')">Название &uarr;</button>
+            <button class="btn btn-primary btn-sm" ng-click="mysort('-name')">Название &darr;</button>
+        </div>
+        </div>
+        <div class="content">
+            <div ng-controller="ProductsController as prod">
+                <div ng-class="layout" ng-repeat="product in prod.products | orderBy:sortmethod">
+                    <h1>{{product.name}}</h1>
+                    <img src="{{product.img}}">
+                    <h3>Цена: {{product.price + ' грн'}}</h3>
+                    <button ng-show="product.presence" type="button" class="btn-success">Купить</button>
+                    <p ng-class="layout" class="presence" ng-hide="product.presence">Нет в наличии</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
