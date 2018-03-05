@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
     <script src="node_modules/angular/angular.js" defer></script>
 
@@ -15,21 +14,37 @@
 </head>
 <body>
 <div class="wrapper" ng-class="{'app-loaded': true}">
+    <div ng-controller="CartController as basket">
+        <div class="basket">
+            <button class="btn btn-default" type="button" ng-click="removeItem()">
+                <img src="https://cdn1.savepice.ru/uploads/2018/3/1/b872059e780f900fecb9a5a1ae64c86c-full.jpg" width="100"><br>
+                <span ng-hide="quantity == 0"><span>{{promoFlag == true ?  quantity * 3 : quantity}}</span> товаров</span>
+                <span ng-show="quantity == 0">Нет товаров</span>
+
+            </button><br><br>
+            <div ng-controller="PromoController as promo">
+                Ввести промо код:<br>
+                <input type="text" ng-model="promo"><br>
+                <b>{{ promo }}</b><br>
+                <b>{{ promoFlag }}</b><br>
+                <button type="button" ng-click="applyPromo()">Применить</button>
+            </div>
+        </div>
+    </div>
     <div ng-controller="PageController as page">
         <div class="btn_bock">
-        <div class="btn_lay">
-            Вид:
-            <button class="btn btn-default btn-sm" ng-class="{active: layout == 'grid'}" ng-click="itemClicked('grid')">Плитка</button>
-            <button class="btn btn-default btn-sm" ng-class="{active: layout == 'list'}" ng-click="itemClicked('list')">Список</button>
-        </div>
-
-        <div class="btn_sort">
-            Сортировка:
-            <button class="btn btn-primary btn-sm" ng-click="mysort('price')">Цена &uarr;</button>
-            <button class="btn btn-primary btn-sm" ng-click="mysort('-price')">Цена &darr;</button>
-            <button class="btn btn-primary btn-sm" ng-click="mysort('name')">Название &uarr;</button>
-            <button class="btn btn-primary btn-sm" ng-click="mysort('-name')">Название &darr;</button>
-        </div>
+            <div class="btn_lay">
+                Вид:
+                <button class="btn btn-default btn-sm" ng-class="{active: layout == 'grid'}" ng-click="itemClicked('grid')">Плитка</button>
+                <button class="btn btn-default btn-sm" ng-class="{active: layout == 'list'}" ng-click="itemClicked('list')">Список</button>
+            </div>
+            <div class="btn_sort">
+                Сортировка:
+                <button class="btn btn-primary btn-sm" ng-click="mysort('price')">Цена &uarr;</button>
+                <button class="btn btn-primary btn-sm" ng-click="mysort('-price')">Цена &darr;</button>
+                <button class="btn btn-primary btn-sm" ng-click="mysort('name')">Название &uarr;</button>
+                <button class="btn btn-primary btn-sm" ng-click="mysort('-name')">Название &darr;</button>
+            </div>
         </div>
         <div class="content">
             <div ng-controller="ProductsController as prod">
@@ -37,7 +52,7 @@
                     <h1>{{product.name}}</h1>
                     <img src="{{product.img}}">
                     <h3>Цена: {{product.price + ' грн'}}</h3>
-                    <button ng-show="product.presence" type="button" class="btn-success">Купить</button>
+                    <button ng-show="product.presence" type="button" class="btn-success" ng-click="addItem()">Купить</button>
                     <p ng-class="layout" class="presence" ng-hide="product.presence">Нет в наличии</p>
                 </div>
             </div>

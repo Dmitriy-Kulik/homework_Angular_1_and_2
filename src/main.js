@@ -14,6 +14,38 @@ app.controller('PageController', function($scope){
     }
 });
 
+app.controller('CartController', function ($scope, $rootScope) {
+    $rootScope.quantity = 0;
+    $rootScope.promoFlag = false;
+
+    $rootScope.addItem = function () {
+        console.log('+');
+        $rootScope.quantity++;
+        console.log($rootScope.quantity + ' in cart');
+    };
+
+    $rootScope.removeItem = function () {
+        if($rootScope.quantity >= 1){
+            console.log('-');
+            $rootScope.quantity--;
+        }
+    };
+});
+
+app.controller('PromoController', function ($scope, $rootScope) {
+    $scope.promo = '';
+
+    $scope.applyPromo = function () {
+        if($scope.promo == '1234'){
+            $rootScope.promoFlag = true;
+            console.log($rootScope.promoFlag);
+            console.log($rootScope.quantity + ' in promo');
+        } else {
+            $rootScope.promoFlag = false;
+        }
+    };
+});
+
 app.controller('ProductsController', function(){
     this.products = [
         {
